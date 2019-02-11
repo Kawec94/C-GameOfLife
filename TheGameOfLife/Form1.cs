@@ -18,14 +18,6 @@ namespace TheGameOfLife
         string deadPath = "..\\..\\Images\\0.jpg";
         int StepsCounter = 0;
 
-        List<int> lista = new List<int>();
-        List<PictureBox> pbListON = new List<PictureBox>();
-        List<PictureBox> pbListOFF = new List<PictureBox>();
-
-        List<int> cellAlive = new List<int>();
-        List<int> cellDead = new List<int>();
-
-
         public Form1()
         {
             InitializeComponent();
@@ -62,32 +54,6 @@ namespace TheGameOfLife
             }
         }
 
-        private void isCellAliveNextTurn2(int x, int y)
-        {
-            if (cellStatus[x, y] == 0)
-            {
-                if (aliveNeighbors[x, y] == 3)
-                {
-                    cellAlive.Add(cellStatus[x, y]);
-                    pbListON.Add(pb[x,y]);
-                    //cellON(x, y);
-                }
-            }
-            if (cellStatus[x, y] == 1)
-            {
-                if (aliveNeighbors[x, y] == 2 || aliveNeighbors[x, y] == 3)
-                {
-                    cellStatus[x, y] = 1;
-                }
-                else
-                {
-                    cellDead.Add(cellStatus[x, y]);
-                    pbListOFF.Add(pb[x, y]);
-                    //cellOFF(x, y);
-                }
-            }
-        }
-
         private void StartStop()
         {       
             labelStepsCounter.Text = "Steps: " + (StepsCounter += 1).ToString();          
@@ -97,33 +63,9 @@ namespace TheGameOfLife
                 for (int y = 0; y < height; y++)
                 {
                     checkAliveNeighbors(x, y);
-                    isCellAliveNextTurn2(x, y);
-                    aliveNeighbors[x, y] = 0;
                 }
             }
 
-            for (int i = 0; i < pbListOFF.Count; i++)
-            {
-                cellDead[i] = 0;
-                pbListOFF[i].ImageLocation = deadPath;
-            }
-            for (int i = 0; i < pbListON.Count; i++)
-            {
-                cellAlive[i] = 1;               
-                pbListON[i].ImageLocation = alivePath;
-            }
-
-            cellDead.Clear();
-            cellAlive.Clear();
-
-            pbListON.Clear();
-            pbListOFF.Clear();
-
-            //MessageBox.Show(pbListON.Count.ToString());
-            //MessageBox.Show(pbListOFF.Count.ToString());
-
-
-            /*
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
@@ -132,7 +74,6 @@ namespace TheGameOfLife
                     aliveNeighbors[x, y] = 0;
                 }
             }
-            */
         }
 
         private void isCellAliveNextTurn(int x, int y)
@@ -355,11 +296,6 @@ namespace TheGameOfLife
                     checkCellStatus(x, y);
                 }
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(cellDead[0].ToString());
         }
     }
 }
